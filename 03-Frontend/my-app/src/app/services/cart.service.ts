@@ -8,12 +8,13 @@ import { Subject } from 'rxjs';
 export class CartService {
 
   cartItems: CardItem[] = [];
-
+  
   totalPrice: Subject<number> = new Subject<number>();
   totalQuantity: Subject<number> = new Subject<number>();
   constructor() { }
 
   addToCart(theCartItem: CardItem){
+    console.log(`Adding to cart: ${theCartItem.name}, ${theCartItem.unitPrice}`);
     let alreadyExistsInCart: boolean = false;
     let existingCartItem: CardItem = undefined;
     if(this.cartItems.length>0){
@@ -24,6 +25,7 @@ export class CartService {
         break;
       }
   }
+}
 
   alreadyExistsInCart = (existingCartItem != undefined);
   if(alreadyExistsInCart){
@@ -36,9 +38,10 @@ export class CartService {
   this.computeCartTotals();
 
 
-}
-}
+
+  }
   computeCartTotals() {
+    console.log('Computing cart totals');
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
@@ -52,7 +55,7 @@ export class CartService {
     this.logCartData(totalPriceValue, totalQuantityValue);
   }
 
-  private logCartData(totalPriceValue: number, totalQuantityValue: number) {
+  logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log('Contents of the cart');
     for (let tempCartItem of this.cartItems) {
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
@@ -60,7 +63,6 @@ export class CartService {
     }
 
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
-    console.log('----');
-  }
-
+    console.log('---');
+}
 }
