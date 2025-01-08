@@ -2,7 +2,7 @@
     <div class="section-content section-content-p30">
         <div class="container-fluid">
             <table class="table table-bordered">
-                <tbody >
+                <tbody>
                     <tr>
                         <th width="20%">Product Image</th>
                         <th width="50%">Product Detail</th>
@@ -10,19 +10,44 @@
                     </tr>
                     <tr *ngFor="let tempCartItem of cartItems">
                         <td>
-                            <img src="{{tempCartItem.imageUrl}}" class="img-responsive" width="150px"/>
+                            <img src="{{tempCartItem.imageUrl}}" class="img-responsive" width="150px" />
                         </td>
                         <td>
                             <p>{{tempCartItem.name}}</p>
                             <p>{{tempCartItem.unitPrice | currency :'USD'}}</p>
                         </td>
-    
+
                         <td>
                             <div class="items">
-                                <label>Quantity </label>{{tempCartItem.quantity}}
+
+                                <label>Quantity: </label>{{tempCartItem.quantity}}
+                                <div class="row no gutters">
+                                    <div class="col">
+                                        <button class="btn btn-primary" (click)="incrementQuantity(tempCartItem)">
+                                            <i class="fa fa-plus"></i>
+
+                                        </button>
+
+                                    </div>
+                                    <div class="col ml-4 mr-2">
+                                        {{tempCartItem.quantity}}
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-primary" (click)="decrementQuantity(tempCartItem)">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+
+                                        <div class="col-8"></div>
+                                </div>
                             </div>
+                            <p class="mt-2">
+                                Subtotal: {{tempCartItem.quantity * tempCartItem.unitPrice | currency :'USD'}}
+                            </p>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">Total</td>
+                        <td style="font-weight: bold;">{{totalPrice | currency :'USD'}}</td>
                 </tbody>
             </table>
         </div>
