@@ -35,5 +35,7 @@ export class CartDetailsComponent implements OnInit {
     this.cartService.addToCart(theCartItem);
   }
 
-
+decrementQuantity(theCartItem: any) {
+    this.cartService.decrementQuantity(theCartItem);
+  }
 }
