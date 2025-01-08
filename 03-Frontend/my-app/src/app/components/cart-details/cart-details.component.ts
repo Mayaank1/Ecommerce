@@ -31,4 +31,9 @@ export class CartDetailsComponent implements OnInit {
     
   }
 
+  incrementQuantity(theCartItem: any) {
+    this.cartService.addToCart(theCartItem);
+  }
+
+
 }
