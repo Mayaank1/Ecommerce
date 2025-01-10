@@ -8,7 +8,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class CheckoutComponent implements OnInit {
   checkoutFormGroup: FormGroup;
-
+  totalPrice: number = 0;
+  totalQuantity: number = 0;
   constructor(private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
@@ -44,5 +45,14 @@ export class CheckoutComponent implements OnInit {
   }
 onSubmit(){
   console.log(this.checkoutFormGroup.value);
+}
+copyShippingAddressToBillingAddress(event){
+  if(event.target.checked){
+    this.checkoutFormGroup.controls['billingAddress']
+    .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+  }
+  else{
+    this.checkoutFormGroup.controls['billingAddress'].reset();
+  }
 }
 }
