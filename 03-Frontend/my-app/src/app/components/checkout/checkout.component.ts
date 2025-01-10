@@ -37,7 +37,8 @@ export class CheckoutComponent implements OnInit {
         nameOnCard: [''],
         cardNumber: [''],
         securityCode: [''],
-        expirationMonth: ['']
+        expirationMonth: [''],
+        expirationYear: ['']
       })
     });
   }
