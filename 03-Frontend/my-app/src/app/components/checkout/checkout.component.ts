@@ -84,4 +84,28 @@ copyShippingAddressToBillingAddress(event){
   }
 }
 
+handleMonthsandYears(){
+  const creditCardExpirationMonth = this.checkoutFormGroup.get('creditCard.expirationMonth').value
+
+  const currentYear: number = new Date().getFullYear();
+  const selectedYear: number = Number(this.checkoutFormGroup.get('creditCard.expirationYear').value);
+
+  let startMonth: number;
+
+  if(currentYear === selectedYear){
+    startMonth = new Date().getMonth() + 1;
+  }
+  else{
+    startMonth = 1;
+  }
+
+  this.shopForm.getCreditCardMonths(startMonth).subscribe(
+    data => {
+      console.log("Retrieved credit card months: " + JSON.stringify(data));
+      this.creditCardMonths = data;
+    }
+  );
+}
+
+
 }
