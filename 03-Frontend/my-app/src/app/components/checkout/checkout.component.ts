@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
+import { CartDetailsComponent } from '../cart-details/cart-details.component';
+import { ShopFormService } from '../../services/shop-form.service';
 
 @Component({
   selector: 'app-checkout',
@@ -9,13 +11,18 @@ import { CartService } from '../../services/cart.service';
 })
 export class CheckoutComponent implements OnInit {
   checkoutFormGroup: FormGroup;
-  totalPrice: number = 0;
   totalQuantity: number = 0;
+  totalPrice: number = 0.00;
+
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
 
   
-  constructor(private formBuilder:FormBuilder,private cartService : CartService) { }
+  constructor(private formBuilder: FormBuilder,private shopForm : ShopFormService) { }
 
   ngOnInit(): void {
+
+   
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: [''],
@@ -45,7 +52,24 @@ export class CheckoutComponent implements OnInit {
         expirationYear: ['']
       })
     });
-    this.totalQuantityAndPrice();
+
+    const startMonth: number = new Date().getMonth() + 1;
+    console.log("Start month: " + startMonth);
+
+    this.shopForm.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit card months: " + JSON.stringify(data));
+        this.creditCardMonths = data;
+      }
+    );
+
+    this.shopForm.getCreditCardYears().subscribe(
+      data => {
+        console.log("Retrieved credit card years: " + JSON.stringify(data));
+        this.creditCardYears = data;
+      }
+    );
+    
   }
 onSubmit(){
   console.log(this.checkoutFormGroup.value);
@@ -60,12 +84,4 @@ copyShippingAddressToBillingAddress(event){
   }
 }
 
-totalQuantityAndPrice(){
-  this.cartService.totalPrice.subscribe(
-    data => this.totalPrice = data
-  );
-  this.cartService.totalQuantity.subscribe(
-    data => this.totalQuantity = data
-  );
-}
 }
