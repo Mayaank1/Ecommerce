@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CardItem } from '../common/card-item';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class CartService {
 
   cartItems: CardItem[] = [];
   
-  totalPrice: Subject<number> = new Subject<number>();
-  totalQuantity: Subject<number> = new Subject<number>();
+  totalPrice: Subject<number> = new BehaviorSubject<number>(0);
+  totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
   constructor() { }
 
   addToCart(theCartItem: CardItem){
