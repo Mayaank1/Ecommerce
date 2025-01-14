@@ -18,10 +18,11 @@ export class CheckoutComponent implements OnInit {
   creditCardMonths: number[] = [];
 
   
-  constructor(private formBuilder: FormBuilder,private shopForm : ShopFormService) { }
+  constructor(private formBuilder: FormBuilder,private shopForm : ShopFormService, private cartService : CartService) { }
 
   ngOnInit(): void {
 
+    this.reviewCartDetails();
    
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -71,6 +72,15 @@ export class CheckoutComponent implements OnInit {
     );
 
     }
+  reviewCartDetails() {
+    this.cartService.totalQuantity.subscribe(
+      data => this.totalQuantity = data
+    );
+
+    this.cartService.totalPrice.subscribe(
+      data => this.totalPrice = data
+    );
+  }
   
     get firstName() {
       return this.checkoutFormGroup.get('customer.firstName');
