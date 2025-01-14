@@ -11,10 +11,10 @@ public class State {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "country")
+
+    @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-
 
     public int getId() {
         return id;

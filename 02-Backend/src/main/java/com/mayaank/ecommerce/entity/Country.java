@@ -1,12 +1,12 @@
 package com.mayaank.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name ="country")
-
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +44,11 @@ public class Country {
         this.name = name;
     }
 
+    public List<State> getStates() {
+        return states;
+    }
 
-
-
+    public void setStates(List<State> states) {
+        this.states = states;
+    }
 }

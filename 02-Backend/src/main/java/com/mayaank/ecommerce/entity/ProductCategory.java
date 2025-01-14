@@ -2,6 +2,8 @@ package com.mayaank.ecommerce.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Set;
 
@@ -43,6 +45,8 @@ public class ProductCategory {
     private String categoryName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+
+    @JsonIgnore
     private Set<Product> products;
 
 }
