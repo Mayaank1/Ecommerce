@@ -3,6 +3,8 @@ package com.mayaank.ecommerce.service;
 import com.mayaank.ecommerce.dao.CustomerRepository;
 import com.mayaank.ecommerce.dto.PurchaseResponse;
 import com.mayaank.ecommerce.dto.Purchase;
+import com.mayaank.ecommerce.entity.Order;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,24 @@ public class CheckoutServiceImpl implements CheckoutService {
         this.customerRepository = customerRepository;
     }
     @Override
+    @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
-        return null;
+      Order order = purchase.getOrder();
+        order.setOrderTrackingNumber(generateOrderTrackingNumber());
+        order.setOrderItems(purchase.getOrderItems());
+        order.setBillingAddress(purchase.getBillingAddress());
+        order.setShippingAddress(purchase.getShippingAddress());
+        order.setCustomer(purchase.getCustomer());
+
+        customerRepository.save(purchase.getCustomer());
+
+        return
+
+    }
+
+    private String generateOrderTrackingNumber() {
+
+
+
     }
 }
