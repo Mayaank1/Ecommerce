@@ -31,4 +31,8 @@ if(this.isAuthenticated){
 }
 
 }
+
+logut(){
+  this.okaAuth.signOut();
+}
 }
