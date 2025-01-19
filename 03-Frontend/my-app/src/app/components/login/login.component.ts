@@ -17,11 +17,29 @@ export class LoginComponent implements OnInit {
         logo: 'assets/images/logo.png',
         baseUrl: myAppConfig.oidc.issuer.split('/oauth2')[0],
         clientId: myAppConfig.oidc.clientId,
+        redirectUri: myAppConfig.oidc.redirectUri,
+        authParams: {
+          pkce: true,
+          issuer: myAppConfig.oidc.issuer,
+          scopes: myAppConfig.oidc.scopes
+        }
         
       });
    }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
+    this.oktaSignIn.remove();
+    this.oktaSignIn.renderEl({
+      el: '#okta-sign-in-widget'}, 
+      (response) => {
+        if (response.status === 'SUCCESS') {
+          this.okaAuth.signInWithRedirect();
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    );
   }
 
 
