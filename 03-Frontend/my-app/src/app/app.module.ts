@@ -66,12 +66,13 @@ const routes: Routes = [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OktaAuthModule
 
 
 
   ],
-  providers: [ProductService,provideHttpClient()],
+  providers: [ProductService,provideHttpClient(), {provide: OKTA_CONFIG, useValue: {oktaAuth}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

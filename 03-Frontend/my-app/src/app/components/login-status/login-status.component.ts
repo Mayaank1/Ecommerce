@@ -32,7 +32,7 @@ if(this.isAuthenticated){
 
 }
 
-logut(){
+logout(){
   this.okaAuth.signOut();
 }
 }
