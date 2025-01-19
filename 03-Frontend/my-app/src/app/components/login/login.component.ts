@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
         baseUrl: myAppConfig.oidc.issuer.split('/oauth2')[0],
         clientId: myAppConfig.oidc.clientId,
         redirectUri: myAppConfig.oidc.redirectUri,
+        useClassicEngine: true,
         authParams: {
           pkce: true,
           issuer: myAppConfig.oidc.issuer,
@@ -31,12 +32,12 @@ export class LoginComponent implements OnInit {
     this.oktaSignIn.remove();
     this.oktaSignIn.renderEl({
       el: '#okta-sign-in-widget'}, 
-      (response) => {
+      (response:any) => {
         if (response.status === 'SUCCESS') {
           this.okaAuth.signInWithRedirect();
         }
       },
-      (error) => {
+      (error:any) => {
         throw error;
       }
     );
