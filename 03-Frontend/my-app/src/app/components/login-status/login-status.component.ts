@@ -22,7 +22,13 @@ export class LoginStatusComponent implements OnInit {
     );
   }
   getUserDetails() {
-    throw new Error('Method not implemented.');
-  }
+if(this.isAuthenticated){
+  this.okaAuth.getUser().then((res) => {
+    this.userFullName = res.name as string;
+    console.log();
 
+  })
+}
+
+}
 }
