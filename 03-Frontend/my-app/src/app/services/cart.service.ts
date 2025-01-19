@@ -7,12 +7,19 @@ import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 })
 export class CartService {
   
-
+  storage: Storage = sessionStorage;
   cartItems: CardItem[] = [];
   
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
-  constructor() { }
+  constructor() {
+    let data = JSON.parse(this.storage.getItem('cartItems')!);
+    if (data) {
+      this.cartItems = data;
+      this.computeCartTotals();
+    }
+
+   }
 
   addToCart(theCartItem: CardItem){
     console.log(`Adding to cart: ${theCartItem.name}, ${theCartItem.unitPrice}`);
@@ -46,6 +53,7 @@ export class CartService {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
+
     for(let currentCartItem of this.cartItems){
       totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
       totalQuantityValue += currentCartItem.quantity;
@@ -54,6 +62,9 @@ export class CartService {
     this.totalQuantity.next(totalQuantityValue);
 
     this.logCartData(totalPriceValue, totalQuantityValue);
+
+    this.persistCartItems();
+
   }
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
@@ -81,5 +92,9 @@ decrementQuantity(theCartItem: any) {
       this.cartItems.splice(itemIndex, 1);
       this.computeCartTotals();
     }
+  }
+
+  persistCartItems() {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 }
