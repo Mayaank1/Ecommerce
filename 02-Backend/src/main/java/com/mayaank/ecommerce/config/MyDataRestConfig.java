@@ -6,6 +6,7 @@ import com.mayaank.ecommerce.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -18,6 +19,8 @@ import java.util.Set;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
+    @Value("${allow-origin}")
+    private String[] theAllowedOrigins;
     private EntityManager entityManager;
 
     @Autowired
@@ -37,6 +40,8 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         extracted(Country.class,config, theUnsupportedActions);
         extracted(State.class,config, theUnsupportedActions);
         exposeIds(config);
+
+        cors.addMapping(config.getBasePath()+"/**").allowedOrigins(theAllowedOrigins);
 
 
 
